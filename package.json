@@ -1,0 +1,22 @@
+{
+  "name": "website-template",
+  "version": "1.0.0",
+  "description": "OXAYAZA's basis for the web site",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OXAYAZA/Website-Template.git"
+  },
+  "author": "OXAYAZA",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/OXAYAZA/Website-Template/issues"
+  },
+  "homepage": "https://github.com/OXAYAZA/Website-Template#readme",
+  "dependencies": {
+    "tempaw-functions": "2.3.5"
+  }
+}
