@@ -18,5 +18,55 @@
   "homepage": "https://github.com/OXAYAZA/Website-Template#readme",
   "dependencies": {
     "tempaw-functions": "2.3.5"
+  },
+  "devDependencies": {
+    "gulp-pug-linter": "^1.1.0",
+    "gulp-stylelint": "^8.0.0",
+    "stylelint": "^9.10.1",
+    "stylelint-scss": "^3.5.4"
+  },
+  "pugLintConfig": {
+    "disallowSpacesInsideAttributeBrackets": true
+  },
+  "scssLintConfig": {
+    "plugins": [
+      "stylelint-scss"
+    ],
+    "rules": {
+      "scss/no-dollar-variables": true
+    }
+  },
+  "cssLintConfig": {
+    "rules": {
+      "block-no-empty": null,
+      "color-no-invalid-hex": true,
+      "declaration-colon-space-after": "always",
+      "max-empty-lines": 2,
+      "comment-empty-line-before": [
+        "always",
+        {
+          "ignore": [
+            "stylelint-commands",
+            "after-comment"
+          ]
+        }
+      ],
+      "indentation": [
+        "tab",
+        {
+          "except": [
+            "value"
+          ]
+        }
+      ],
+      "rule-empty-line-before": [
+        "always",
+        {
+          "except": [
+            "first-nested"
+          ]
+        }
+      ]
+    }
   }
 }

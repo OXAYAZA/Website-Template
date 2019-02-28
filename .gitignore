@@ -9,9 +9,8 @@
 !/.gitignore
 !/build.js
 !/gulpfile.js
-!/config.js
 !/package.json
-!/package-lock.json
+!/project.config.js
 !/README.md
 
 # Обязательные папки

@@ -5,7 +5,7 @@ const
 	util         = require( 'tempaw-functions' ).util,
 	task         = require( 'tempaw-functions' ).task,
 	ROOT         = process.cwd().replace( /\\/g, '/' ),
-	configFile   = `${ROOT}/config.js`;
+	configFile   = `${ROOT}/project.config.js`;
 
 util.configLoad( configFile );
 
@@ -49,4 +49,57 @@ if( global.config.jadeToPug && global.config.jadeToPug.showTask ) gulp.task( tas
 if( global.config.lessToScss && global.config.lessToScss.showTask ) gulp.task( task.lessToScss );
 
 // Generating tasks from build rules
-util.genBuildTasks();
+if ( global.config.buildRules ) util.genBuildTasks();
+
+
+// Code Lint
+const
+	stylelint = require( 'gulp-stylelint' ),
+	puglint = require( 'gulp-pug-linter' ),
+	lintConfig = require( './package.json' );
+
+function styleLintFormatter ( report ) {
+	report.forEach( function( item ) {
+		item.warnings.forEach( function( warning ) {
+			console.log( gutil.colors.red( '×' ), warning.text );
+			console.log( `${item.source}:${warning.line}:${warning.column}\n` );
+		});
+	});
+}
+
+function pugLintForamtter ( errors ) {
+	errors.forEach( function ( error, index ) {
+		let tmp = error.toJSON();
+		console.log( gutil.colors.red( '×' ), tmp.msg );
+		console.log( `${tmp.filename}:${tmp.line}:${tmp.column}\n` );
+	});
+}
+
+function lintCss () {
+	return gulp.src( 'dev/css/**/*.css' )
+		.pipe( stylelint({
+			config: lintConfig.cssLintConfig,
+			failAfterError: false,
+			reporters: [{ formatter: styleLintFormatter }]
+		}));
+}
+
+function lintScss () {
+	return gulp.src( 'dev/scss/**/*.scss' )
+	.pipe( stylelint({
+		config: lintConfig.scssLintConfig,
+		failAfterError: false,
+		reporters: [{ formatter: styleLintFormatter }]
+	}));
+}
+
+function lintPug () {
+	return gulp.src( 'dev/pug/**/*.pug' )
+		.pipe( puglint({ reporter: pugLintForamtter }));
+}
+
+lintCss.displayName = 'Lint CSS';
+lintScss.displayName = 'Lint SCSS';
+lintPug.displayName = 'Lint PUG';
+
+gulp.task( 'Lint Code', gulp.series( lintScss, lintCss, lintPug ) );

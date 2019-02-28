@@ -64,7 +64,7 @@ module.exports = {
 		showTask: false,
 	},
 	buildRules: {
-		'build': [
+		'Build': [
 			build({
 				clean: true,
 				livedemo: true,
@@ -88,9 +88,9 @@ module.exports = {
 				}
 			})
 		],
-		'util-backup': [
+		'Util Backup': [
 			action.pack({
-				src: [ 'dev/**/*', '*.*' ], dest: 'versions/',
+				src: [ 'dev/**/*', '*.*', '.gitignore' ], dest: 'versions/',
 				name( dateTime ) { return `backup-${dateTime[0]}-${dateTime[1]}.zip`; }
 			})
 		]
