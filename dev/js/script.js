@@ -1,4 +1,12 @@
 'use strict';
+
+/*
+global
+	WOW
+	Isotope
+	Swiper
+*/
+
 // Global variables
 var plugins = {
 

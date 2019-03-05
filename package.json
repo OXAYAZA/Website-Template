@@ -20,10 +20,25 @@
     "tempaw-functions": "2.3.5"
   },
   "devDependencies": {
+    "gulp-eslint": "^5.0.0",
     "gulp-pug-linter": "^1.1.0",
     "gulp-stylelint": "^8.0.0",
     "stylelint": "^9.10.1",
     "stylelint-scss": "^3.5.4"
+  },
+  "jsLintConfig": {
+    "baseConfig": {
+      "extends": "eslint:recommended",
+      "env": {
+        "browser": true,
+        "jquery": true
+      }
+    },
+    "rules": {
+      "indent": [ "error", "tab" ],
+      "camelcase": 2,
+      "no-console": 1
+    }
   },
   "pugLintConfig": {
     "disallowSpacesInsideAttributeBrackets": true
