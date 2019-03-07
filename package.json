@@ -21,9 +21,12 @@
   },
   "devDependencies": {
     "gulp-eslint": "^5.0.0",
+    "gulp-html-validator": "0.0.5",
     "gulp-pug-linter": "^1.1.0",
     "gulp-stylelint": "^8.0.0",
+    "pug-lint-config-clock": "^2.0.0",
     "stylelint": "^9.10.1",
+    "stylelint-config-recommended-scss": "^3.2.0",
     "stylelint-scss": "^3.5.4"
   },
   "jsLintConfig": {
@@ -35,53 +38,36 @@
       }
     },
     "rules": {
-      "indent": [ "error", "tab" ],
+      "indent": [
+        "error",
+        "tab"
+      ],
       "camelcase": 2,
       "no-console": 1
     }
   },
   "pugLintConfig": {
-    "disallowSpacesInsideAttributeBrackets": true
+    "extends": "clock",
+    "validateIndentation": "\t",
+    "validateExtensions": null,
+    "validateLineBreaks": "CRLF",
+    "disallowSpacesInsideAttributeBrackets": null,
+    "requireSpacesInsideAttributeBrackets": true,
+    "disallowMultipleLineBreaks": null,
+    "disallowTrailingSpaces": true,
+    "disallowClassLiteralsBeforeIdLiterals": true,
+    "disallowIdLiterals": null,
+    "disallowIdAttributeWithStaticValue": true,
+    "disallowIdLiteralsBeforeAttributes": true,
+    "disallowLegacyMixinCall": true,
+    "validateTemplateString": true
   },
   "scssLintConfig": {
     "plugins": [
       "stylelint-scss"
     ],
-    "rules": {
-      "scss/no-dollar-variables": true
-    }
-  },
-  "cssLintConfig": {
-    "rules": {
-      "block-no-empty": null,
-      "color-no-invalid-hex": true,
-      "declaration-colon-space-after": "always",
-      "max-empty-lines": 2,
-      "comment-empty-line-before": [
-        "always",
-        {
-          "ignore": [
-            "stylelint-commands",
-            "after-comment"
-          ]
-        }
-      ],
-      "indentation": [
-        "tab",
-        {
-          "except": [
-            "value"
-          ]
-        }
-      ],
-      "rule-empty-line-before": [
-        "always",
-        {
-          "except": [
-            "first-nested"
-          ]
-        }
-      ]
-    }
+    "extends": [
+      "stylelint-config-recommended-scss"
+    ]
   }
 }

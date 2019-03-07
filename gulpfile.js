@@ -54,17 +54,23 @@ if ( global.config.buildRules ) util.genBuildTasks();
 
 // Code Lint
 const
-	stylelint  = require( 'gulp-stylelint' ),
-	puglint    = require( 'gulp-pug-linter' ),
-	eslint     = require( 'gulp-eslint' ),
-	lintConfig = require( './package.json' );
+	stylelint    = require( 'gulp-stylelint' ),
+	puglint      = require( 'gulp-pug-linter' ),
+	eslint       = require( 'gulp-eslint' ),
+	htmlValidator = require( 'gulp-html-validator' ),
+	lintConfig   = require( './package.json' );
 
-function styleLintFormatter ( report ) {
+global.globalLintReport = {};
+
+function scssLintFormatter ( report ) {
 	report.forEach( function( file ) {
 		file.warnings.forEach( function( warning ) {
 			console.log( gutil.colors.red( '⨂' ), warning.text.replace( /\s*\(.*\)/, '' ), gutil.colors.gray( `[${warning.rule}]` ) );
 			console.log( `${file.source}:${warning.line}:${warning.column}\n` );
 		});
+
+		if ( !global.globalLintReport.scssErrors ) global.globalLintReport.scssErrors = 0;
+		global.globalLintReport.scssErrors += file.warnings.length;
 	});
 }
 
@@ -72,8 +78,11 @@ function pugLintForamtter ( errors ) {
 	errors.forEach( function ( error ) {
 		let tmp = error.toJSON();
 		console.log( gutil.colors.red( '⨂' ), tmp.msg, gutil.colors.gray( `[${tmp.code}]` ) );
-		console.log( `${tmp.filename}:${tmp.line}:${tmp.column}\n` );
+		console.log( `${tmp.filename}${tmp.line?`:${tmp.line}`:''}${tmp.column?`:${tmp.column}`:''}\n` );
 	});
+
+	if ( !global.globalLintReport.pugErrors ) global.globalLintReport.pugErrors = 0;
+	global.globalLintReport.pugErrors += errors.length;
 }
 
 function esLintForamtter ( report ) {
@@ -94,25 +103,38 @@ function esLintForamtter ( report ) {
 		});
 	});
 
-	console.log( 'errors:', gutil.colors.red( report.errorCount ) );
-	console.log( 'warnings:', gutil.colors.yellow( report.warningCount ) );
+	if ( !global.globalLintReport.jsErrors ) global.globalLintReport.jsErrors = 0;
+	if ( !global.globalLintReport.jsWarnings ) global.globalLintReport.jsWarnings = 0;
+
+	global.globalLintReport.jsErrors += report.errorCount;
+	global.globalLintReport.jsWarnings += report.warningCount;
 }
 
-function lintCss () {
-	return gulp.src( 'dev/css/**/*.css' )
-		.pipe( stylelint({
-			config: lintConfig.cssLintConfig,
-			failAfterError: false,
-			reporters: [{ formatter: styleLintFormatter }]
-		}));
+function htmlValidateFormatter ( report ) {
+	report.messages.forEach( function ( message ) {
+		switch( message.type ) {
+			case 'error':
+				console.log( gutil.colors.red( '⨂' ), message.message );
+				if ( !global.globalLintReport.htmlErrors ) global.globalLintReport.htmlErrors = 0;
+				global.globalLintReport.htmlErrors += 1;
+				break;
+			case 'info':
+				console.log( gutil.colors.yellow( '⚠' ), message.message );
+				if ( !global.globalLintReport.htmlWarnings ) global.globalLintReport.htmlWarnings = 0;
+				global.globalLintReport.htmlWarnings += 1;
+				break;
+		}
+
+		console.log( `${report.fileName}:${message.lastLine}:${message.firstColumn}\n` );
+	});
 }
 
 function lintScss () {
-	return gulp.src( 'dev/scss/**/*.scss' )
+	return gulp.src([ 'dev/scss/*.scss', 'dev/scss/!(bootstrap)/**/*.scss' ])
 	.pipe( stylelint({
 		config: lintConfig.scssLintConfig,
 		failAfterError: false,
-		reporters: [{ formatter: styleLintFormatter }]
+		reporters: [{ formatter: scssLintFormatter }]
 	}));
 }
 
@@ -127,9 +149,25 @@ function lintJs () {
 		.pipe( eslint.format( esLintForamtter ) );
 }
 
-lintCss.displayName = 'Lint CSS';
+function validateHtml() {
+	return gulp.src( 'dev/**/*.html' )
+		.pipe( htmlValidator({ format: 'json' }) )
+		.on( 'data', function ( vinyl ) {
+			var report = JSON.parse( vinyl['_contents'].toString( 'utf8' ) );
+			report.fileName = vinyl.history[ vinyl.history.length - 1 ];
+			htmlValidateFormatter( report );
+		});
+}
+
+function finalReport ( end ) {
+	console.log( global.globalLintReport );
+	end();
+}
+
 lintScss.displayName = 'Lint SCSS';
 lintPug.displayName = 'Lint PUG';
 lintJs.displayName = 'Lint JS';
+validateHtml.displayName = 'Validate HTML';
+finalReport.displayName = 'Final lint report';
 
-gulp.task( 'Lint Code', gulp.series( lintJs, lintScss, lintCss, lintPug ) );
+gulp.task( 'Validate Code', gulp.series( lintJs, lintScss, lintPug, validateHtml, finalReport ) );
