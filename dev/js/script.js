@@ -1,14 +1,5 @@
 'use strict';
 
-//{DEL USERPACKAGE}
-/*
-global
-	WOW
-	Isotope
-	Swiper
-*/
-//{DEL}
-
 // Global variables
 var plugins = {
 

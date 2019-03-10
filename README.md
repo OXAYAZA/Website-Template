@@ -12,8 +12,10 @@
 - [ ] Дополнительные компоненты (Добавляются только по мере необходимости)
     - [ ] [Swiper](http://idangero.us/swiper/)
     - [ ] [Owl Carousel](http://owlcarousel2.github.io/OwlCarousel2)
+    - [ ] Slick Carousel
     - [ ] Parallax
-    - [ ] Breadcrumbs
+    - [ ] Mouse Parallax
+    - [ ] Vide
     - [ ] [MultiSwitches](https://github.com/OXAYAZA/Multi-Switches)
 - [ ] Описать CSG (js, scss, pug)
     - [ ] Настройки форматирования для WS
