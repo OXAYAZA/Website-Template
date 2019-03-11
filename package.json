@@ -47,21 +47,20 @@
     }
   },
   "pugLintConfig": {
-    "extends": "clock",
-    "validateIndentation": "\t",
-    "validateExtensions": null,
-    "validateLineBreaks": "CRLF",
-    "disallowSpacesInsideAttributeBrackets": null,
-    "requireSpacesInsideAttributeBrackets": true,
-    "disallowMultipleLineBreaks": null,
-    "disallowTrailingSpaces": true,
-    "disallowClassLiteralsBeforeIdLiterals": true,
-    "disallowIdLiterals": null,
-    "disallowIdAttributeWithStaticValue": true,
-    "disallowIdLiteralsBeforeAttributes": true,
-    "disallowLegacyMixinCall": true,
-    "validateTemplateString": true
-  },
+		"extends": "clock",
+		"validateIndentation": "\t",
+		"validateExtensions": null,
+		"validateLineBreaks": "CRLF",
+		"disallowSpacesInsideAttributeBrackets": null,
+		"requireSpacesInsideAttributeBrackets": true,
+		"disallowTrailingSpaces": true,
+		"disallowClassLiteralsBeforeIdLiterals": true,
+		"disallowIdLiterals": null,
+		"disallowIdAttributeWithStaticValue": true,
+		"disallowIdLiteralsBeforeAttributes": null,
+		"disallowLegacyMixinCall": true,
+		"validateTemplateString": true
+	},
   "scssLintConfig": {
     "plugins": [
       "stylelint-scss"
