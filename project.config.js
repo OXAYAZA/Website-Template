@@ -28,6 +28,7 @@ module.exports = {
 		options: {
 			pretty: true,
 			verbose: true,
+			self: true,
 			emitty: true
 		}
 	},

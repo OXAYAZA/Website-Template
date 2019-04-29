@@ -1,0 +1,9 @@
+//- Image
+	@param {string} name
+	@param {object} [options]
+	@param {boolean} [options.retina]
+mixin img( name, options )
+	-
+		var size = getImageSize( name );
+		if( options && options.retina ) { size[0] = ~~(size[0]/2); size[1] = ~~(size[1]/2); }
+	img( src= procImg( name ), alt='', width= size[ 0 ], height= size[ 1 ] )&attributes( attributes )

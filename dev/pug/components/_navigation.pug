@@ -1,0 +1,9 @@
+//- Navigation
+	@param {Array} menu
+mixin navigation( menu )
+	- let prefix = attributes.class || 'navigation';
+
+	ul( class= { navigation: !attributes.class } )&attributes( attributes )
+		each item in menu
+			li( class= [ `${prefix}-item`, item.active ? 'active' : null ] )
+				a( class= `${prefix}-link`, href= item.link )= item.title

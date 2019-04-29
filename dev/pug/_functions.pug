@@ -36,16 +36,6 @@
 	}
 
 	/**
-	* @desc Returns random string
-	* @param {number} length - string length
-	*/
-	function randomStr( length ) {
-		var str = '';
-		for ( var n = 0; n < length; n++ ) str += String.fromCharCode( 97 + Math.random() * 25 );
-		return str;
-	}
-
-	/**
 	* @todo Description
 	*/
 	function procMenu ( menu, parent ) {
@@ -63,10 +53,12 @@
 	function directMenuPass ( menu, cb ) {
 		for( var i = 0; i < menu.length; i++ ) {
 			var item = menu[i];
-			if ( cb ) if ( cb( item ) ) return;
+			if ( self.directMenuPassEnd ) break;  // Not for async or parallel processes
+			if ( cb ) if ( cb( item ) ) self.directMenuPassEnd = true;
 			if ( item.dropdown ) directMenuPass( item.dropdown, cb );
 			else if ( item.megamenu ) directMenuPass( item.megamenu, cb );
 			else if ( item.list ) directMenuPass( item.list, cb );
+			else if ( item instanceof Array ) directMenuPass( item, cb );
 		}
 	}
 
@@ -79,13 +71,10 @@
 		// Primary menu processing
 		procMenu( menu );
 
-		// Setting active elements and generating breadcrumbs
+		// Setting active navigation elements
 		directMenuPass( menu, function( item ) {
 			if ( item.title && item.title.toLowerCase() === pageName.toLowerCase() ) {
-				inverseMenuPass( item, function( item ) {
-					item.active = true;
-					if ( !item.list ) breadcrumbs.unshift( item );
-				});
+				inverseMenuPass( item, function( item ) { item.active = true; });
 				return true;
 			}
 		});

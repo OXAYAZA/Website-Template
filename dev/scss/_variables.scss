@@ -1,0 +1,45 @@
+// Variables
+
+// Accent colors
+$primary: #f8603b;
+
+// Grid breakpoints
+$grid-breakpoints: (
+	xs: 0,
+	sm: 576px,
+	md: 768px,
+	lg: 992px,
+	xl: 1200px,
+	xxl: 1600px
+);
+
+// Grid containers
+$container-max-widths: (
+	sm: 540px,
+	md: 720px,
+	lg: 960px,
+	xl: 1200px
+);
+
+// Components
+
+$line-height-base: 1.2;
+$line-height-lg: 1;
+$line-height-sm: 1.7;
+
+// Fonts
+$h1-font-size: px-to-rem( 94px );
+$h2-font-size: px-to-rem( 54px );
+$h3-font-size: px-to-rem( 34px );
+$h4-font-size: px-to-rem( 24px );
+$h5-font-size: px-to-rem( 20px );
+$h6-font-size: px-to-rem( 18px );
+
+$h1-line-height: $line-height-lg;
+$h2-line-height: $line-height-base;
+$h3-line-height: $line-height-base;
+$h4-line-height: $line-height-base;
+$h5-line-height: $line-height-base;
+$h6-line-height: $line-height-base;
+
+$headings-font-weight: 900;

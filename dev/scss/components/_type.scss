@@ -1,0 +1,52 @@
+/** @section type */
+
+// Headings
+
+#{headings()} {
+	text-transform: uppercase;
+}
+
+h1 {
+	font-size: px-to-rem( 40px );
+	line-height: $line-height-base;
+
+	@include media-breakpoint-up( xl ) {
+		font-size: $h1-font-size;
+		line-height: $h1-line-height;
+	}
+}
+
+h2 {
+	font-size: px-to-rem( 32px );
+	line-height: $line-height-base;
+
+	@include media-breakpoint-up( xl ) {
+		font-size: $h2-font-size;
+		line-height: $h1-line-height;
+	}
+}
+
+h3 {
+	font-size: px-to-rem( 28px );
+	line-height: $line-height-base;
+
+	@include media-breakpoint-up( xl ) {
+		font-size: $h3-font-size;
+		line-height: $h1-line-height;
+	}
+}
+
+h4 {
+	font-size: px-to-rem( 19 );
+	line-height: $line-height-base;
+
+	@include media-breakpoint-up( xl ) {
+		font-size: $h4-font-size;
+		line-height: $h1-line-height;
+	}
+}
+
+// Link
+a {
+	transition: color .2s;
+}

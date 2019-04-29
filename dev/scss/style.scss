@@ -4,6 +4,8 @@
 
 /* @section Bootstrap */
 @import "bootstrap/functions";
+@import "functions";
+@import "variables";
 @import "bootstrap/variables";
 @import "bootstrap/mixins";
 @import "bootstrap/root";
@@ -40,3 +42,10 @@
 @import "bootstrap/spinners";
 @import "bootstrap/utilities";
 @import "bootstrap/print";
+
+/** @group Components */
+@import "components/page-loader";
+@import "components/page";
+@import "components/type";
+@import "components/logo";
+@import "components/simple-navbar";
